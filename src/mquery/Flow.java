@@ -109,4 +109,16 @@ public final class Flow<T> {
 		
 		return result;
 	}
+
+	public <E> Flow<E> select(IProperty<T, E> property)
+	{
+		ArrayList<E> resultList = new ArrayList<>();
+		for(T item : this.data)
+		{
+			resultList.add(property.property(item));
+		}
+		Flow<E> result = new Flow<>();
+		result.setData(resultList);
+		return result;
+	}
 }
