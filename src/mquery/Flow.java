@@ -91,6 +91,38 @@ public final class Flow<T> {
 		}
 		return result;
 	}
+
+	public <E extends Number> double min(IProperty<T, E> property)
+	{
+		double result = property.property(this.data.get(0)).doubleValue();
+		
+		for(T item : this.data)
+		{
+			double value = property.property(item).doubleValue();
+			if(value < result)
+			{
+				result = value;
+			}
+		}
+		
+		return result;
+	}
+	
+	public <E extends Number> double max(IProperty<T, E> property)
+	{
+		double result = property.property(this.data.get(0)).doubleValue();
+		
+		for(T item : this.data)
+		{
+			double value = property.property(item).doubleValue();
+			if(value > result)
+			{
+				result = value;
+			}
+		}
+		
+		return result;
+	}
 	
 	public <E, G> Map<E, ArrayList<G>> groupBy(IProperty<T, E> key, IProperty<T, G> value)
 	{
