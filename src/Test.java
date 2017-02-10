@@ -38,4 +38,19 @@ public class Test {
 		assertEquals(result.get(5).id, 6);
 	}
 
+	@org.junit.Test
+	public void maxTest()
+	{
+		Flow<Book> f = getQuery();
+		double max = f.max(b -> b.id);
+		assertEquals(max, 6.0, 0.1);
+	}
+	
+	@org.junit.Test
+	public void minText()
+	{
+		Flow<Book> f = getQuery();
+		double min = f.min(b -> b.id);
+		assertEquals(min, 1.0, 0.1);
+	}
 }
