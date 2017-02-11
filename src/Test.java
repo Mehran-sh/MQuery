@@ -7,8 +7,8 @@ import org.junit.Assert;
 import mquery.*;
 
 public class Test {
-
-	public Flow<Book> getQuery()
+	
+	public ArrayList<Book> getData()
 	{
 		ArrayList<Book> d = new ArrayList<>();
 		d.add(new Book(6, "Book 6"));
@@ -17,7 +17,12 @@ public class Test {
 		d.add(new Book(2, "Book 2"));
 		d.add(new Book(3, "Book 3"));
 		d.add(new Book(1, "Book 1"));
-		return Flow.query(d);
+		return d;
+	}
+	
+	public Flow<Book> getQuery()
+	{
+		return Flow.query(getData());
 	}
 	
 	@org.junit.Test
@@ -47,10 +52,24 @@ public class Test {
 	}
 	
 	@org.junit.Test
-	public void minText()
+	public void minTest()
 	{
 		Flow<Book> f = getQuery();
 		double min = f.min(b -> b.id);
 		assertEquals(min, 1.0, 0.1);
+	}
+
+	@org.junit.Test
+	public void selectTest()
+	{
+		Flow<Book> f = getQuery();
+		ArrayList<Author> result = f
+				.where(b -> b.id % 2 == 0)
+				.select(b -> new Author(){{id = 1L; name = "mehran"; bookIds.add(b.id);}})
+				.all();
+		
+		assertEquals(result.size(), 3);
+		assertEquals(result.get(0).name, "mehran");
+		assertEquals(result.get(0).bookIds.get(0), 6, 0.1);
 	}
 }

@@ -63,9 +63,8 @@ public final class Flow<T> {
 			}
 		}
 		
-		Flow<T> result = new Flow<T>();
-		result.setData(resultList);
-		return result;
+		this.setData(resultList);
+		return this;
 	}
 	
 	public <E extends Comparable<E>> Flow<T> orderBy(IProperty<T, E> property)
